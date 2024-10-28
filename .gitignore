@@ -1,0 +1,57 @@
+# Python-related files
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+*.pyd
+
+# Virtual environment
+venv/
+env/
+.myvenv/
+
+# Django-specific files
+#*.sqlite3
+#db.sqlite3
+/media/
+staticfiles/
+static/
+*.log
+
+# Environment variables
+.env
+
+# PyCharm and VSCode specific files
+.idea/
+.vscode/
+
+# Migrations
+**/migrations/*
+
+# Byte-compiled / optimized / DLL files
+*.egg
+*.egg-info
+dist/
+build/
+.eggs/
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# macOS files
+.DS_Store
+
+# Windows files
+Thumbs.db
+*.bak
+
+# Node modules (if using npm/yarn for frontend assets)
+node_modules/
+
+# Local cache files
+__pycache__/
