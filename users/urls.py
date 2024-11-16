@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import HealthCheckView,RegisterView, LoginView,UserViewSet, DisciplineViewSet, MatchViewSet
+from .views import HealthCheckView,RegisterView, LoginView,UserViewSet, DisciplineViewSet, MatchViewSet,CurrentUserView
 from rest_framework_simplejwt.views import TokenRefreshView
 
 router = DefaultRouter()
@@ -22,11 +22,12 @@ discipline_detail = DisciplineViewSet.as_view({
 
 urlpatterns = [
     path('health/', HealthCheckView.as_view(), name='health-check'),
-    path('', include(router.urls)),
+    path('users/me/', CurrentUserView.as_view(), name='current-user'),
     path('user/<int:user_id>/disciplines/', discipline_list, name='discipline-list'),
     path('user/<int:user_id>/disciplines/<int:pk>/', discipline_detail, name='discipline-detail'),
     path('auth/register/', RegisterView.as_view(), name='register'),
     path('auth/login/', LoginView.as_view(), name='login'),
     path('auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+     path('', include(router.urls)),
 ]
 

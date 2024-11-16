@@ -72,6 +72,12 @@ class UserViewSet(ModelViewSet):
             return [AllowAny()]
         return [IsAuthenticated()]
     
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 class DisciplineViewSet(ModelViewSet):
     serializer_class = DisciplineSerializer
