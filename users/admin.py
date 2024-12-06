@@ -23,7 +23,7 @@ class CustomUserAdmin(UserAdmin):
 
 # Personaliza la visualización del modelo Discipline
 class DisciplineAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'favorite_position', 'dominant_foot', 'leader_number', 'clutch_number')
+    list_display = ('user', 'name', 'favorite_position', 'dominant_foot')
     search_fields = ('user__username', 'name')
     list_filter = ('name',)
     ordering = ('user', 'name')
