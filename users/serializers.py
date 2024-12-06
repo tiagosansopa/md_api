@@ -29,10 +29,27 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = ['id', 'place', 'date_time', 'player_count', 'formation']
 
+
+    def create(self, validated_data):
+        match = super().create(validated_data)
+
+        # Create player slots
+        for slot_number in range(1, match.player_count + 1):
+            PlayerSlot.objects.create(
+                match=match,
+                slot_number=slot_number
+            )
+        return match
+
 class PlayerSlotSerializer(serializers.ModelSerializer):
+    player_username = serializers.SerializerMethodField()
     class Meta:
         model = PlayerSlot
-        fields = ['slot_number', 'player', 'is_captain']
+        fields = '__all__'
+        extra_fields = ['player_username']
+
+    def get_player_username(self, obj):
+        return obj.player.username if obj.player else None
 
 class MatchDetailSerializer(serializers.ModelSerializer):
     player_slots = PlayerSlotSerializer(many=True)
@@ -40,3 +57,4 @@ class MatchDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = ['id', 'place', 'location_coordinates', 'date_time', 'player_count', 'formation', 'field_type', 'player_slots']
+

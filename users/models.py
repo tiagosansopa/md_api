@@ -23,9 +23,9 @@ class CustomUser(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10, blank=True)
     height = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Value
-    height_unit = models.CharField(max_length=2, choices=DIMENSIONAL_UNIT_CHOICES[:3], default='cm')  # Unit
+    height_unit = models.CharField(max_length=2, choices=DIMENSIONAL_UNIT_CHOICES, default='cm')  # Unit
     weight = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)  # Value
-    weight_unit = models.CharField(max_length=2, choices=DIMENSIONAL_UNIT_CHOICES[3:], default='kg')  # Unit
+    weight_unit = models.CharField(max_length=2, choices=DIMENSIONAL_UNIT_CHOICES, default='kg')  # Unit
     country = models.CharField(max_length=50, blank=True)
     disability = models.CharField(max_length=20, choices=DISABILITY_CHOICES, default='none')
 

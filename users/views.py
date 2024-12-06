@@ -2,11 +2,13 @@ from rest_framework.viewsets import ModelViewSet
 from .models import CustomUser
 from .models import Discipline
 from .models import Match
+from .models import PlayerSlot
+from .serializers import PlayerSlotSerializer
 from .serializers import UserSerializer
 from .serializers import DisciplineSerializer
 from .serializers import MatchSerializer
 from .serializers import MatchDetailSerializer
-
+from rest_framework.decorators import action
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -107,3 +109,18 @@ class MatchViewSet(ModelViewSet):
     def perform_create(self, serializer):
         # Asocia automáticamente el partido con el usuario autenticado
         serializer.save(creator=self.request.user)
+
+
+class PlayerSlotViewSet(ModelViewSet):
+    queryset = PlayerSlot.objects.all()
+    serializer_class = PlayerSlotSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_update(self, serializer):
+        serializer.save(player=self.request.user)
+
+    @action(detail=False, methods=['get'], url_path='match/(?P<match_id>[^/.]+)')
+    def slots_by_match(self, request, match_id=None):
+        slots = PlayerSlot.objects.filter(match_id=match_id)
+        serializer = self.get_serializer(slots, many=True)
+        return Response(serializer.data)
