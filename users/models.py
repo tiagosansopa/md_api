@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
         ('cm', 'Centimeters'),
         ('m', 'Meters'),
         ('in', 'Inches'),
+        ('ft', 'Feet'),
         ('kg', 'Kilograms'),
         ('lb', 'Pounds'),
     ]
@@ -34,12 +35,15 @@ class CustomUser(AbstractUser):
 
 
 
+from django.db import models
+from django.conf import settings
+
 class Discipline(models.Model):
     DISCIPLINE_CHOICES = [
         ('soccer', 'Soccer'),
         ('running', 'Running'),
         ('gym', 'Gym'),
-        # Add more disciplines as needed
+        ('tennis', 'Tennis'),
     ]
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='disciplines')
@@ -49,18 +53,33 @@ class Discipline(models.Model):
     # Soccer-specific fields
     favorite_position = models.CharField(max_length=50, blank=True, null=True)
     dominant_foot = models.CharField(max_length=10, choices=[('left', 'Left'), ('right', 'Right')], blank=True, null=True)
-    leader_number = models.IntegerField(blank=True, null=True)
-    clutch_number = models.IntegerField(blank=True, null=True)
-    
-    # Soccer stats
-    pace = models.IntegerField(default=0)  # Ratings from 1 to 5
+    pace = models.IntegerField(default=0)
     defending = models.IntegerField(default=0)
     shooting = models.IntegerField(default=0)
     passing = models.IntegerField(default=0)
     dribbling = models.IntegerField(default=0)
 
+    # Gym-specific fields
+    arm = models.IntegerField(default=0) 
+    chest = models.IntegerField(default=0)
+    back = models.IntegerField(default=0)
+    leg = models.IntegerField(default=0)
+    strength = models.IntegerField(default=0)
+    resistance = models.IntegerField(default=0)
+
+    # Running-specific fields
+    max_distance = models.FloatField(default=0.0)
+    pace_avg = models.FloatField(default=0.0) 
+    level = models.IntegerField(default=0) 
+
+    # Tennis-specific fields
+    forehand = models.CharField(max_length=10, choices=[('left', 'Left'), ('right', 'Right')], blank=True, null=True)
+    backhand = models.CharField(max_length=10, choices=[('left', 'Left'), ('right', 'Right')], blank=True, null=True)
+    tennis_level = models.IntegerField(default=0) 
+
     def __str__(self):
         return f"{self.name.capitalize()} - {self.user.username}"
+
 
 class Match(models.Model):
     FORMATION_CHOICES = [
