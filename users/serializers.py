@@ -24,29 +24,19 @@ class DisciplineSerializer(serializers.ModelSerializer):
             'forehand', 'backhand', 'tennis_level', 'created_at'
         ]
 
-# Match Serializer
 class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
-        fields = [
-            'id', 'place', 'location_coordinates', 'date_time', 
-            'player_count', 'formation', 'field_type', 'creator'
-        ]
+        fields = ['id', 'place', 'date_time', 'player_count', 'formation']
 
-# Player Slot Serializer
 class PlayerSlotSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlayerSlot
-        fields = ['id', 'slot_number', 'player', 'is_captain', 'joined_at']
+        fields = ['slot_number', 'player', 'is_captain']
 
-# Match Detail Serializer
 class MatchDetailSerializer(serializers.ModelSerializer):
     player_slots = PlayerSlotSerializer(many=True)
 
     class Meta:
         model = Match
-        fields = [
-            'id', 'place', 'location_coordinates', 'date_time', 
-            'player_count', 'formation', 'field_type', 'creator', 
-            'player_slots'
-        ]
+        fields = ['id', 'place', 'location_coordinates', 'date_time', 'player_count', 'formation', 'field_type', 'player_slots']
