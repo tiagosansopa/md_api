@@ -33,10 +33,18 @@ class MatchSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         match = super().create(validated_data)
 
-        # Create player slots
+        # Create player slots for team 1
         for slot_number in range(1, match.player_count + 1):
             PlayerSlot.objects.create(
                 match=match,
+                team=1,
+                slot_number=slot_number
+            )
+        # Create player slots for team 2
+        for slot_number in range(1, match.player_count + 1):
+            PlayerSlot.objects.create(
+                match=match,
+                team=2,
                 slot_number=slot_number
             )
         return match
