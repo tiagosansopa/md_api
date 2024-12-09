@@ -108,7 +108,7 @@ class Match(models.Model):
 class PlayerSlot(models.Model):
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='player_slots')
     player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
-    slot_number = models.IntegerField()  # Position on the field
+    slot_number = models.IntegerField() 
     is_captain = models.BooleanField(default=False)
     joined_at = models.DateTimeField(auto_now_add=True)
     team = models.IntegerField() 
