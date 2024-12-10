@@ -24,12 +24,44 @@ class DisciplineSerializer(serializers.ModelSerializer):
             'forehand', 'backhand', 'tennis_level', 'created_at'
         ]
 
+
+class PlayerSlotSerializer(serializers.ModelSerializer):
+    player_username = serializers.SerializerMethodField()
+    class Meta:
+        model = PlayerSlot
+        fields = '__all__'
+        extra_fields = ['player_username']
+
+    def get_player_username(self, obj):
+        return obj.player.username if obj.player else None
+
+
 class MatchSerializer(serializers.ModelSerializer):
+    player_slots = PlayerSlotSerializer(many=True,read_only=True)
+    team_1_players = serializers.SerializerMethodField()
+    team_2_players = serializers.SerializerMethodField()
+
     class Meta:
         model = Match
-        fields = ['id', 'place', 'date_time', 'player_count', 'formation']
+        fields = [
+            'id', 
+            'place', 
+            'location_coordinates', 
+            'date_time', 
+            'player_count', 
+            'formation', 
+            'field_type', 
+            'player_slots',
+            'team_1_players',
+            'team_2_players',
+        ]
 
+    def get_team_1_players(self, obj):
+        return obj.player_slots.filter(team=1, player__isnull=False).count()
 
+    def get_team_2_players(self, obj):
+        return obj.player_slots.filter(team=2, player__isnull=False).count()
+    
     def create(self, validated_data):
         match = super().create(validated_data)
 
@@ -49,15 +81,8 @@ class MatchSerializer(serializers.ModelSerializer):
             )
         return match
 
-class PlayerSlotSerializer(serializers.ModelSerializer):
-    player_username = serializers.SerializerMethodField()
-    class Meta:
-        model = PlayerSlot
-        fields = '__all__'
-        extra_fields = ['player_username']
 
-    def get_player_username(self, obj):
-        return obj.player.username if obj.player else None
+
 
 class MatchDetailSerializer(serializers.ModelSerializer):
     player_slots = PlayerSlotSerializer(many=True)

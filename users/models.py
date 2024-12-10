@@ -111,7 +111,7 @@ class PlayerSlot(models.Model):
     slot_number = models.IntegerField() 
     is_captain = models.BooleanField(default=False)
     joined_at = models.DateTimeField(auto_now_add=True)
-    team = models.IntegerField() 
+    team = models.IntegerField(null=True, blank=True) 
 
     def __str__(self):
         return f"Slot {self.slot_number} - {'Empty' if self.player is None else self.player.username}"
