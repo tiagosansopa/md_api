@@ -8,7 +8,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
         write_only=True,  # Don't expose in API response
         required=True,
-        validators=[validate_password],  # Uses Django's password validation
+        # validators=[validate_password],  # Uses Django's password validation
         style={'input_type': 'password'}  # UI hint for form rendering
     )
 
