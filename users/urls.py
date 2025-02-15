@@ -7,9 +7,9 @@ router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')  # Manages user retrieval, update, and delete
 
 urlpatterns = [
-    path("register/", RegisterView.as_view(), name="register"),  # User creation
-    path("login/", LoginView.as_view(), name="login"),  # Login
-    path("me/", CurrentUserView.as_view(), name="current-user"),  # Get logged-in user info
-    path("health/", HealthCheckView.as_view(), name="health"),  # Get logged-in user info
-    path("", include(router.urls)),  # Include UserViewSet routes
+    path("register/", RegisterView.as_view(), name="register"),
+    path("login/", LoginView.as_view(), name="login"), 
+    path("me/", CurrentUserView.as_view(), name="current-user"),  
+    path("health/", HealthCheckView.as_view(), name="health"), 
+    path("", include(router.urls)), 
 ]
