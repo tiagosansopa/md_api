@@ -9,7 +9,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True,  # Don't expose in API response
         required=True,
         # validators=[validate_password],  # Uses Django's password validation
-        style={'input_type': 'password'}  # UI hint for form rendering
+        #style={'input_type': 'password'}  # UI hint for form rendering
     )
 
     class Meta:
